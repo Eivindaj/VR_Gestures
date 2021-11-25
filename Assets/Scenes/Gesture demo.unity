@@ -170,9 +170,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4402da2965d3c7e4fb270486ed007265, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeleton: {fileID: 1493487165}
   gestures:
-  - name: Fist
+  - name: Right fist
     fingerDatas:
     - {x: 0, y: 0, z: 0}
     - {x: 0, y: 0, z: 0}
@@ -212,7 +211,7 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-  - name: Peace sign
+  - name: Right peace sign
     fingerDatas:
     - {x: 0, y: 0, z: 0}
     - {x: 0, y: 0, z: 0}
@@ -241,7 +240,7 @@ MonoBehaviour:
     onRecognized:
       m_PersistentCalls:
         m_Calls: []
-  - name: Pointing
+  - name: Right pointing
     fingerDatas:
     - {x: 0, y: 0, z: 0}
     - {x: 0, y: 0, z: 0}
@@ -281,7 +280,7 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-  - name: Finger guns
+  - name: Right finger guns
     fingerDatas:
     - {x: 0, y: 0, z: 0}
     - {x: 0, y: 0, z: 0}
@@ -311,7 +310,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 220581514}
-          m_MethodName: spawnBullet
+          m_MethodName: rightSpawnBullet
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -321,7 +320,7 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-  - name: Palm
+  - name: Right palm
     fingerDatas:
     - {x: 0, y: 0, z: 0}
     - {x: 0, y: 0, z: 0}
@@ -350,16 +349,101 @@ MonoBehaviour:
     onRecognized:
       m_PersistentCalls:
         m_Calls: []
-  debug: 0
+  - name: Left fist
+    fingerDatas:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0.0200693, y: 0.011554093, z: 0.01049652}
+    - {x: 0.035049085, y: 0.017225342, z: 0.029498978}
+    - {x: 0.06113919, y: 0.022050688, z: 0.048290268}
+    - {x: 0.09378969, y: 0.030484753, z: 0.05047694}
+    - {x: 0.0959962, y: 0.0073164483, z: 0.023550676}
+    - {x: 0.11349832, y: 0.040854014, z: 0.020832596}
+    - {x: 0.089837186, y: 0.04638127, z: 0.021349961}
+    - {x: 0.09564661, y: 0.0025431693, z: 0.0017259191}
+    - {x: 0.111871496, y: 0.04225299, z: 0.00010880845}
+    - {x: 0.08471667, y: 0.044669073, z: 0.004078551}
+    - {x: 0.0886938, y: 0.0065293163, z: -0.017465249}
+    - {x: 0.10159826, y: 0.04332127, z: -0.016742049}
+    - {x: 0.07618002, y: 0.043471824, z: -0.008993827}
+    - {x: 0.034073543, y: 0.009419813, z: -0.022998583}
+    - {x: 0.077895835, y: 0.0136912, z: -0.035054065}
+    - {x: 0.09268171, y: 0.040591653, z: -0.033834487}
+    - {x: 0.075972766, y: 0.0430691, z: -0.022555044}
+    - {x: 0.11048157, y: 0.04024128, z: 0.03523221}
+    - {x: 0.072556175, y: 0.0321908, z: 0.022470238}
+    - {x: 0.07096103, y: 0.024335235, z: 0.008763986}
+    - {x: 0.06770618, y: 0.020729803, z: -0.006668235}
+    - {x: 0.067073725, y: 0.023324039, z: -0.01893999}
+    onRecognized:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 220581514}
+          m_MethodName: spawnBullet
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - name: Left finger guns
+    fingerDatas:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0.02006931, y: 0.011554097, z: 0.010496548}
+    - {x: 0.032185536, y: 0.011482402, z: 0.032195427}
+    - {x: 0.05707611, y: 0.0038115203, z: 0.05165578}
+    - {x: 0.08316236, y: -0.008349005, z: 0.06936468}
+    - {x: 0.09599622, y: 0.0073164324, z: 0.023550684}
+    - {x: 0.13016292, y: 0.018565264, z: 0.011526323}
+    - {x: 0.14951828, y: 0.031268574, z: 0.0041328347}
+    - {x: 0.09564663, y: 0.0025431227, z: 0.0017258966}
+    - {x: 0.10479069, y: 0.04445591, z: 0.00016556619}
+    - {x: 0.07787167, y: 0.043959618, z: 0.006004964}
+    - {x: 0.08869386, y: 0.0065292916, z: -0.01746525}
+    - {x: 0.09313952, y: 0.04518372, z: -0.01486361}
+    - {x: 0.067680776, y: 0.043954164, z: -0.0073478017}
+    - {x: 0.03407358, y: 0.009419845, z: -0.022998605}
+    - {x: 0.07789589, y: 0.01369117, z: -0.035054076}
+    - {x: 0.08151798, y: 0.043194696, z: -0.0272973}
+    - {x: 0.0625535, y: 0.043440413, z: -0.020028176}
+    - {x: 0.09381351, y: -0.019709023, z: 0.08843591}
+    - {x: 0.16857, y: 0.039098248, z: -0.0046413545}
+    - {x: 0.06296197, y: 0.024676275, z: 0.011526868}
+    - {x: 0.054190464, y: 0.024093797, z: -0.0031062919}
+    - {x: 0.04963546, y: 0.026188174, z: -0.015831152}
+    onRecognized:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 220581514}
+          m_MethodName: leftSpawnBullet
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  leftSkeleton: {fileID: 2020761798}
+  rightSkeleton: {fileID: 1493487165}
+  cam: {fileID: 1494774796}
   cubePrefab: {fileID: 1288215702000622268, guid: e95fba248de856b4bb5ec03251e244ef,
     type: 3}
   bulletPrefab: {fileID: 4861620056403425961, guid: bc3e52671c615d746b41c21d3d208bd6,
     type: 3}
   circle: {fileID: 7476884328128948624, guid: 3fa13804f97fa984e9ecefc138af6db6, type: 3}
-  cam: {fileID: 1494774796}
+  triangle: {fileID: 2910600239530449413, guid: 190e6b30bdcfcba4ca6b6430b69a3cfa,
+    type: 3}
+  star: {fileID: 7240384337024478243, guid: 5c83d5633901f2f4fa906cf825a3dee9, type: 3}
+  newGestureName: triangle
+  threshold: 0.29
   creationMode: 0
-  newGestureName: circle
-  threshold: 0.27
+  debug: 0
 --- !u!1 &233432978
 GameObject:
   m_ObjectHideFlags: 0
@@ -438,7 +522,7 @@ Light:
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
-  m_ShadowAngle: 0
+  m_ShadowAngle: 1
 --- !u!4 &233432980
 Transform:
   m_ObjectHideFlags: 0
@@ -447,7 +531,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 233432978}
   m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalPosition: {x: 14.08, y: 36.55, z: -24.38}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -498,7 +582,7 @@ MonoBehaviour:
   m_AreaLightShadowCone: 120
   m_UseScreenSpaceShadows: 0
   m_InteractsWithSky: 1
-  m_AngularDiameter: 0.5
+  m_AngularDiameter: 1
   m_FlareSize: 2
   m_FlareTint: {r: 1, g: 1, b: 1, a: 1}
   m_FlareFalloff: 4
@@ -648,6 +732,7 @@ GameObject:
   - component: {fileID: 1129108331}
   - component: {fileID: 1129108330}
   - component: {fileID: 1129108329}
+  - component: {fileID: 1129108332}
   - component: {fileID: 1129108328}
   m_Layer: 0
   m_Name: Plane
@@ -656,20 +741,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!64 &1129108328
-MeshCollider:
+--- !u!54 &1129108328
+Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1129108327}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!23 &1129108329
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -731,6 +818,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1129108332
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1129108327}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 9.999999, y: 0.05, z: 9.999999}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1493487165 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114567484643301796, guid: 835e735ca71bf78459fb2cababd74112,
@@ -924,6 +1024,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 126d619cf4daa52469682f85c1378b4a, type: 3}
+--- !u!114 &2020761798 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114567484643301796, guid: 835e735ca71bf78459fb2cababd74112,
+    type: 3}
+  m_PrefabInstance: {fileID: 2038679468}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2609c54f376cffc4da1ab9401cc1a36f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2038679468
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -981,3 +1093,51 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 835e735ca71bf78459fb2cababd74112, type: 3}
+--- !u!1 &2130060052
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2130060054}
+  - component: {fileID: 2130060053}
+  m_Layer: 0
+  m_Name: Global Volume
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2130060053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2130060052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: 55eb974fc54a6964a911b3237d8b5b5f, type: 2}
+--- !u!4 &2130060054
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2130060052}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.5161028, y: 2.400365, z: -1.708849}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

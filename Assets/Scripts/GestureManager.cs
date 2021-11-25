@@ -15,35 +15,46 @@ public struct HandGesture
 
 public class GestureManager : MonoBehaviour
 {
-	public OVRSkeleton skeleton;
 	public List<HandGesture> gestures;
-	private IList<OVRBone> handBones;
-	public bool debug = true;
+
+	public OVRSkeleton leftSkeleton;
+	public OVRSkeleton rightSkeleton;
+
+	private IList<OVRBone> leftHandBones;
+	private IList<OVRBone> rightHandBones;
+
+	private HandGesture leftPreviousGesture;
+	private HandGesture rightPreviousGesture;
+
+	private List<Vector3> Vecpositions;
+
+	public Camera cam;
 	public GameObject cubePrefab;
 	public GameObject bulletPrefab;
 	public GameObject circle;
-	private HandGesture lastGesture = new HandGesture();
+	public GameObject triangle;
+	public GameObject star;
 
 
-	public Camera cam;
-	public bool creationMode = false;
-	public string newGestureName;
 	private List<Gesture> trainingSet = new List<Gesture>();
+	public string newGestureName;
+	private bool leftTrigger;
+	private bool rightTrigger;
 
-	private bool trigger;
-	private bool moving = false;
 
 	public float threshold = 0.05f;
 
-	private List<Vector3> Vecpositions;
-	private HandGesture previousGesture;
+	public bool creationMode = false;
+	public bool debug = true;
 
 	// Start is called before the first frame update
 	void Start()
-    {
-		handBones = new List<OVRBone>(skeleton.Bones);
-		Debug.Log(handBones.Count);
-		previousGesture = new HandGesture();
+	{
+		leftHandBones = new List<OVRBone>(leftSkeleton.Bones);
+		rightHandBones = new List<OVRBone>(rightSkeleton.Bones);
+
+		leftPreviousGesture = new HandGesture();
+		rightPreviousGesture = new HandGesture();
 
 		string[] gestureFiles = Directory.GetFiles(Application.persistentDataPath + "/", "*.xml");
 		foreach (var item in gestureFiles)
@@ -52,42 +63,74 @@ public class GestureManager : MonoBehaviour
 			Debug.Log("item");
 		}
 		Vecpositions = new List<Vector3>();
-		previousGesture = gestures[0];
-		//Debug.Log("First gesture: " + previousGesture.name);
+		leftPreviousGesture = gestures[1];
+		rightPreviousGesture = gestures[1];
+		//Debug.Log("First gesture: " + rightPreviousGesture.name);
 	}
 
-    // Update is called once per frame
-    void Update()
-    {
-        /*if (debug && Input.GetKeyDown(KeyCode.Space))
+	// Update is called once per frame
+	void Update()
+	{
+
+		if (debug && Input.GetKeyDown(KeyCode.Space))
 		{
 			Debug.Log("This happens?");
 			Save();
-		}*/
-		if (handBones.Count == 0)
+		}
+		if (leftHandBones.Count == 0)
 		{
-			handBones = new List<OVRBone>(skeleton.Bones);
+			leftHandBones = new List<OVRBone>(leftSkeleton.Bones);
 		}
 
-		HandGesture currentGesture = Recognize();
-		bool hasRecognized = !currentGesture.Equals(new HandGesture());
-
-		if(hasRecognized && !currentGesture.Equals(previousGesture))
+		if (rightHandBones.Count == 0)
 		{
-			Debug.Log("Found new gesture: " + currentGesture.name);
-			previousGesture = currentGesture;
-			currentGesture.onRecognized.Invoke();
+			rightHandBones = new List<OVRBone>(rightSkeleton.Bones);
+		}
+
+		HandGesture currentLeftGesture = Recognize(true);
+		HandGesture currentRightGesture = Recognize(false);
+
+		bool hasRecognizedLeft = !currentLeftGesture.Equals(new HandGesture());
+		bool hasRecognizedRight = !currentRightGesture.Equals(new HandGesture());
+
+		if (hasRecognizedLeft && !currentLeftGesture.Equals(leftPreviousGesture))
+		{
+			Debug.Log("Found new gesture left hand: " + currentLeftGesture.name);
+			leftPreviousGesture = currentLeftGesture;
+			currentLeftGesture.onRecognized.Invoke();
+
+			if (currentLeftGesture.name == "Right finger guns")
+			{
+				currentLeftGesture.name = "Left finger guns";
+			}
 
 			//trigger = false;
 
-			trigger = currentGesture.name == "Pointing";
+			leftTrigger = currentLeftGesture.name == "Left pointing";
 		}
 
-		if (trigger)
+		if (hasRecognizedRight && !currentRightGesture.Equals(rightPreviousGesture))
 		{
-			update();
+			Debug.Log("Found new gesture right hand: " + currentRightGesture.name);
+			rightPreviousGesture = currentRightGesture;
+			currentRightGesture.onRecognized.Invoke();
+
+			if (currentRightGesture.name == "Left finger guns")
+			{
+				currentRightGesture.name = "Right finger guns";
+			}
+			//trigger = false;
+
+			rightTrigger = currentRightGesture.name == "Right pointing";
 		}
-		
+
+
+		// fix etterpå
+		if (leftTrigger || rightTrigger)
+		{
+			update(leftTrigger, rightTrigger);
+		}
+
 		/*else if (!trigger && moving)
 		{
 			onEnd();
@@ -99,17 +142,19 @@ public class GestureManager : MonoBehaviour
 		HandGesture g = new HandGesture();
 		g.name = "New gesture";
 		List<Vector3> data = new List<Vector3>();
-		foreach (var bone in handBones)
+		foreach (var bone in leftHandBones)
 		{
-			data.Add(skeleton.transform.InverseTransformPoint(bone.Transform.position));
+			data.Add(leftSkeleton.transform.InverseTransformPoint(bone.Transform.position));
 		}
 
 		g.fingerDatas = data;
 		gestures.Add(g);
 	}
 
-	HandGesture Recognize()
+	HandGesture Recognize(bool leftHand)
 	{
+
+
 		HandGesture currentGesture = new HandGesture();
 		float currentMin = Mathf.Infinity;
 
@@ -117,51 +162,65 @@ public class GestureManager : MonoBehaviour
 		{
 			float sumDistance = 0;
 			bool isDiscarded = false;
-			for (int i = 0; i < handBones.Count; i++)
+			if (leftHand)
 			{
-				Vector3 currentData = skeleton.transform.InverseTransformPoint(handBones[i].Transform.position);
-				float distance = Vector3.Distance(currentData, gesture.fingerDatas[i]);
-
-				if (distance > threshold)
+				for (int i = 0; i < leftHandBones.Count; i++)
 				{
-					isDiscarded = true;
-					break;
+					Vector3 currentData = leftSkeleton.transform.InverseTransformPoint(leftHandBones[i].Transform.position);
+					float distance = Vector3.Distance(currentData, gesture.fingerDatas[i]);
+
+					if (distance > threshold)
+					{
+						isDiscarded = true;
+						break;
+					}
+
+					sumDistance += distance;
 				}
 
-				sumDistance += distance;
+				if (!isDiscarded && sumDistance < currentMin)
+				{
+					currentMin = sumDistance;
+					currentGesture = gesture;
+				}
+			}
+			else
+			{
+				for (int i = 0; i < rightHandBones.Count; i++)
+				{
+					Vector3 currentData = rightSkeleton.transform.InverseTransformPoint(rightHandBones[i].Transform.position);
+					float distance = Vector3.Distance(currentData, gesture.fingerDatas[i]);
+
+					if (distance > threshold)
+					{
+						isDiscarded = true;
+						break;
+					}
+
+					sumDistance += distance;
+				}
+
+				if (!isDiscarded && sumDistance < currentMin)
+				{
+					currentMin = sumDistance;
+					currentGesture = gesture;
+				}
 			}
 
-			if (!isDiscarded && sumDistance < currentMin)
-			{
-				currentMin = sumDistance;
-				currentGesture = gesture;
-			}
 		}
 
 		return currentGesture;
 	}
 
-	public void TriggerTrue()
-	{
-		trigger = true;
-		
-	}
-
-	public void TriggerFalse()
-	{
-		trigger = false;
-	}
-
 	public void onEnd()
 	{
-		trigger = false;
+		//trigger = false;
 		Debug.Log("Position count on end: " + Vecpositions.Count);
-		if (Vecpositions.Count == 0)
+		if (Vecpositions.Count < 5)
 		{
 			return;
 		}
 
-		moving = false;
 		Debug.Log("end");
 
 		Point[] pointArray = new Point[Vecpositions.Count];
@@ -180,15 +239,24 @@ public class GestureManager : MonoBehaviour
 
 			string fileName = Application.persistentDataPath + "/" + newGesture.Name + ".xml";
 			GestureIO.WriteGesture(pointArray, newGestureName, fileName);
-		} else
+		}
+		else
 		{
 			Result result = PointCloudRecognizer.Classify(newGesture, trainingSet.ToArray());
 			Debug.Log(result.GestureClass + result.Score);
-			if(result.Score > 0.5)
+			if (result.Score > 0.5)
 			{
 				if (result.GestureClass == "circle")
 				{
 					Instantiate(circle, (cam.transform.position + cam.transform.rotation * Vector3.forward * 10f), Quaternion.identity);
+				}
+				if (result.GestureClass == "triangle")
+				{
+					Instantiate(triangle, (cam.transform.position + cam.transform.rotation * Vector3.forward * 10f), Quaternion.identity);
+				}
+				if (result.GestureClass == "star")
+				{
+					Instantiate(star, (cam.transform.position + cam.transform.rotation * Vector3.forward * 10f), Quaternion.identity);
 				}
 			}
 		}
@@ -196,15 +264,31 @@ public class GestureManager : MonoBehaviour
 		Vecpositions.Clear();
 	}
 
-	void update()
+	void update(bool left, bool right)
 	{
-		Vecpositions.Add(skeleton.Bones[8].Transform.position);
-		Destroy(Instantiate(cubePrefab, skeleton.Bones[8].Transform.position, Quaternion.identity), 3);
-		Debug.Log("update");
+		if (left)
+		{
+			Vecpositions.Add(leftSkeleton.Bones[8].Transform.position);
+			Destroy(Instantiate(cubePrefab, leftSkeleton.Bones[8].Transform.position, Quaternion.identity), 3);
+			Debug.Log("update");
+		}
+		if (right)
+		{
+			Vecpositions.Add(rightSkeleton.Bones[8].Transform.position);
+			Destroy(Instantiate(cubePrefab, rightSkeleton.Bones[8].Transform.position, Quaternion.identity), 3);
+			Debug.Log("update");
+		}
+
 	}
 
-	public void spawnBullet()
+	public void leftSpawnBullet()
 	{
-		Destroy(Instantiate(bulletPrefab, skeleton.Bones[8].Transform.position, cam.transform.rotation), 3);
+		Destroy(Instantiate(bulletPrefab, leftSkeleton.Bones[8].Transform.position, cam.transform.rotation), 3);
+	}
+
+	public void rightSpawnBullet()
+	{
+
+		Destroy(Instantiate(bulletPrefab, rightSkeleton.Bones[8].Transform.position, cam.transform.rotation), 3);
 	}
 }
